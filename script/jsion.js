@@ -49,8 +49,8 @@ JSiON._initialize = function() {
     var o = document.createElement('object');
     o.id = JSiON.domElementID;
     o.classid = 'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000';
-    o.width = '1';
-    o.height = '1';
+    o.width = '8';
+    o.height = '8';
     o.setAttribute('data', JSiON.swfURL);
     o.setAttribute('type', 'application/x-shockwave-flash');
     var p = document.createElement('param');
