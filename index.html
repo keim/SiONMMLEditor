@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SiON MML Editor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+  　 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.0/js.cookie.min.js"></script>
+
+    <!--<script src="https://keim.github.io/default.js"></script>-->
+    <script src="./script/jsion.js"></script>
+    <script src="./script/SiONPresetVoice.js"></script>
+
+    <script src="./ace/ace.js"></script>
+    <style>
+.right-float-panel {
+  position:fixed;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  z-index:1000;
+  padding-right:0px;
+  overflow:auto;
+  display:none;
+}
+span.mml {
+  display:none;
+}
+    </style>
+    <script>
+(function(){
+  var jsion, isSolo, editor, presetVoices, muteTable = new Array(100);
+
+  function _onReady() {
+    $("#play").attr("disabled", false);
+    $("#version").text(JSiON.toString());
+  }
+
+  function position() {
+    var timerID = 0, tempPos, pos;
+    position.setup = function(){
+      _getPositionValue();
+      if (pos > 0) jsion.position(pos*1000);
+    }
+    position.start = function(){
+      tempPos = _getPositionValue();
+      if (timerID) clearInterval(timerID);
+      timerID = setInterval(_updatePosition, 1000);
+    }
+    position.stop = function(){
+      $("#position").val(tempPos);
+      if (timerID) clearInterval(timerID);
+      timerID = 0;
+    }
+    function _getPositionValue() {
+      var a, posstr = $("#position").val();
+      a = posstr.split(":");
+      if (a.length == 2) pos = parseInt(a[0])*60+parseInt(a[1]);
+      else pos = parseInt(a[0]);
+      if (isNaN(pos)) pos = 0;
+      return posstr;
+    }
+    function _updatePosition() {
+      var m, s;
+      pos += 1;
+      m = (pos / 60) >> 0;
+      s = pos - m * 60;
+      $("#position").val(String(m)+":"+("0"+String(s)).slice(-2));
+    }
+  }
+
+  function _play() {
+    var mml = editor.getValue();
+    Cookies.set('mml', mml, { expires: 28 });
+    position.setup();
+    jsion.play(mml);
+    return false;
+  }
+
+  function _stop() {
+    jsion.stop();
+    return false;
+  }
+
+  function _onStreamStart() {
+    $("#stop").show();
+    $("#play").hide();
+    position.start();
+  }
+
+  function _onStreamStop() {
+    $("#stop").hide();
+    $("#play").show();
+    position.stop();
+  }
+
+  function _onChangeTrackMode() {
+    if ($("#mute").val()=='mute') {
+      $("#mute-track").show();
+      $("#solo-track").hide();
+      isSolo = false;
+    } else {
+      $("#mute-track").hide();
+      $("#solo-track").show();
+      isSolo = true;
+    }
+    $("#mute-track>label,#solo-track>label").removeClass('active');
+    _updateMuteTable();
+  }
+
+  function _updateMuteTable() {
+    if (isSolo) __checkSoloTrack();
+    else        __checkMuteTrack();
+    jsion.applyMuteTable(muteTable);
+  }
+
+  function __checkMuteTrack() {
+    var $label, mutetrack17, i;
+
+    $label = $("#mute-track>label");
+    mutetrack17 = $label.eq(16).hasClass('active');
+
+    for (i=0; i<16; i++) {
+      muteTable[i] = $label.eq(i).hasClass('active');
+    }
+    for (i=16; i<100; i++) {
+      muteTable[i] = mutetrack17;
+    }
+  }
+
+  function __checkSoloTrack() {
+    var $label, solotrack, i;
+
+    $label = $("#solo-track>label");
+
+    solotrack = -1;
+    for (i=0; i<16; i++) {
+      if ($label.eq(i).hasClass('active')) {
+        solotrack = i;
+        break;
+      }
+    }
+
+    if (solotrack == -1) {
+      for (i=0; i<100; i++) {
+        muteTable[i] = false;
+      }
+    } else {
+      for (i=0; i<100; i++) {
+        muteTable[i] = (solotrack != i);
+      }
+    }
+  }
+
+
+  function _showConfig() {
+    editor.execCommand("showSettingsMenu");
+  }
+
+
+  function _showKeyboardShortcuts() {
+    _loadSubPages($("#ks-container"), {url:"./subpages/keyboard-shortcuts.html"}, "#keyboard-shortcuts", function(){
+      $('input[name="os"]:radio').on("change",function() { 
+        $('.ks-win,.ks-mac').hide();
+        $($(this).val()).show();
+      });
+      $('.ks-mac').hide();
+    });
+  }
+ 
+
+  function _showCheatSheets() {
+    _loadSubPages($("#cs-container"), {url:"./subpages/cheat-sheets.html"}, "#cheat-sheets", function(){});
+  }
+
+  function _loadSubPages(container, req, query, callback) {
+    if (container.find(query).length == 0) {
+      _showKeyboardShortcuts.opened = true;
+      $.ajax(req).done(function(html){
+        container.append($(html).find(query));
+        callback();
+        $(".right-float-panel").hide();
+        container.show();
+      });
+    } else {
+      $(".right-float-panel").hide();
+      container.show();
+    }
+  }
+
+
+  function _showPresetVoiceList() {
+    var id, i, p, voiceList, $list, name, $primary;
+    if (!presetVoices) {
+      var panel  = '<div class="panel panel-default" id="%id%-panel">';
+          panel += '<div class="panel-heading" role="tab">';
+          panel += '<a role="button" data-toggle="collapse" data-parent="#preset-voice-list" href="#%id%" aria-expanded="true" aria-controls="%id%">%title%</a>';
+          panel += '</div>';
+          panel += '<div id="%id%" class="panel-collapse collapse container-fluid" role="tabpanel"><div class="row" id="%id%-voice-list">';
+          panel += '</div></div></div>';
+      presetVoices = new SiONPresetVoice().categolies;
+      for (i=0; i<presetVoices.length; i++) {
+        id = "p"+String(i);
+        voiceList = presetVoices[i];
+             if (i == 13) name = "General MIDI (FM)";
+        else if (i == 14) name = "General MIDI Drum (FM)";
+        else if (i == 15) name = "General MIDI (1ope)";
+        else if (i == 16) name = "General MIDI Drum (1ope)";
+        else name = voiceList.name;
+
+        $("#preset-voice-list").append($(panel.replace(/%id%/g, id).replace('%title%', name)));
+        $list = $("#"+id+"-voice-list");
+        for (p=0; p<voiceList.length; p++) {
+          name = String(p) + ": " + voiceList[p].name;
+          $list.append($("<button class='col-xs-6 btn btn-xs btn-default' voiceset='"+String(i)+"' voicenum='"+String(p)+"' style='overflow:hidden;text-align:left;'>"+name+"</button>").click(_onclickVoiceList));
+        }
+      }
+      $(".right-float-panel").hide();
+      $("#vs-container").show();
+    } else {
+      $(".right-float-panel").hide();
+      $("#vs-container").show();
+    }
+
+    function _onclickVoiceList() {
+      var $t = $(this), voiceset = $t.attr("voiceset"), voicenum = $t.attr("voicenum");
+      if ($t.hasClass("btn-primary")) {
+        editor.insert(presetVoices[voiceset][voicenum].mml + "\n");
+        editor.focus();
+      } else {
+        if ($primary) $primary.removeClass("btn-primary");
+        $primary = $t.addClass("btn-primary");
+        jsion.play(presetVoices[voiceset][voicenum].mml + "%6@0c;");
+      }
+    }
+  }
+
+  $(function(){
+    JSiON.swfURL = "./script/jsion.swf";
+    jsion = new JSiON(_onReady);
+    jsion.onStreamStart = _onStreamStart;
+    jsion.onStreamStop  = _onStreamStop;
+    $("#play").click(_play).attr("disabled", true);
+    $("#stop").click(_stop).hide();
+    $("#conf").click(_showConfig);
+    $("#help-keyboard-shortcuts").click(_showKeyboardShortcuts);
+    $("#help-preset-voice").click(_showPresetVoiceList);
+    $("#help-cheat-sheets").click(_showCheatSheets);
+    $(".nav>li").tooltip();
+    isSolo = false;
+    $("#mute").on("change", _onChangeTrackMode);
+    $("#editor").height($(window).height() - 336);
+    $("#mml-list-dialog .modal-body").height($(window).height() - 240);
+
+    $("td.mmlbtn")
+
+    editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/sionmml");
+    editor.commands.addCommand({
+      Name : "savefile",
+      bindKey: {win:"Ctrl-S", mac:"Command-S"},
+      exec: function(editor) {}
+    });
+    editor.commands.addCommand({
+      Name : "play",
+      bindKey: {win:"Ctrl-Enter", mac:"Command-Enter"},
+      exec: function(editor) { if (jsion.isPlaying) _stop(); else _play(); }
+    });
+
+    var mml = Cookies.get('mml');
+    if (mml) editor.setValue(mml, 1);
+
+    position();
+
+    $.ajax({url:"./script/mmllist.json",dataType:'json'}).done(function(mmllist){
+      var i, imax = mmllist.length;
+      for (i=0; i<imax; i++) {
+        $("#mml-list").append($("<button class='list-group-item'>"+mmllist[i]+"</button>"));
+      }
+      $("#mml-list button.list-group-item").on("click", function(){
+        $.ajax({url:"https://raw.githubusercontent.com/keim/SiONMML/master/mmltalks/"+$(this).text()}).done(function(mml){
+          editor.setValue(mml, 1);
+        });
+        $('#mml-list-dialog').modal('hide');
+      });
+    });
+  });
+})();
+    </script>
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <ol class="breadcrumb">
+        <li><a href="https://github.com/keim"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Github</a></li>
+      </ol>
+
+      <div class='page-header'>
+        <h2>SiON MML Editor</h2>
+        <small id="version">Loading SiON module ...</small>
+      </div>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li id="play" data-toggle="tooltip" data-placement="bottom" title="Play"><a role="button" style="color:#337ab7"><span class="glyphicon glyphicon-play"></span></a></li>
+              <li id="stop" data-toggle="tooltip" data-placement="bottom" title="Stop"><a role="button" style="color:#ec971f"><span class="glyphicon glyphicon-stop"></span></a></li>
+              <li id="open" data-toggle="tooltip" data-placement="bottom" title="File Open"><a role="button" data-toggle="modal" data-target="#mml-list-dialog"><span class="glyphicon glyphicon-folder-open"></span></a></li>
+              <li id="conf" data-toggle="tooltip" data-placement="bottom" title="Editor Config"><a role="button"><span class="glyphicon glyphicon-cog"></span></a></li>
+              <li class="dropdown">
+                <a class=" dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+                  <span class="glyphicon glyphicon-question-sign"></span> <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="javascript:void(0);" id="help-keyboard-shortcuts">Keyboard Shortcuts</a></li>
+                  <li><a href="javascript:void(0);" id="help-preset-voice">Preset Voice List</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="javascript:void(0);" id="help-cheat-sheets">SiON MML CheatSheet</a></li>
+                  <li><a href="http://keim.github.io/sion/mmlref/" target="_reference">SiON MML Reference</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form class="navbar-form">
+              <div class="input-group">
+                <input type="input" class="form-control" id="position" placeholder="0" aria-describedby="position-sec" style="width:80px;"/>
+                <span class="input-group-addon" id="position-sec">sec.</span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </nav>
+      <div id="editor">//write mml here</div>
+      <br/>
+
+      <form class="form-inline">
+        <select class="form-control" id="mute">
+          <option value="mute">Mute</option>
+          <option value="solo">Solo</option>
+        </select>
+        <div class="btn-group" id="mute-track" data-toggle="buttons">
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">1</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">2</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">3</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">4</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">5</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">6</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">7</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">8</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">9</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">10</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">11</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">12</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">13</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">14</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">15</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">16</label>
+          <label class="btn btn-default"><input type="checkbox" autocomplete="off">17~</label>
+        </div>
+        <div class="btn-group" id="solo-track" data-toggle="buttons" style="display:none;">
+          <label class="btn btn-default"><input type="radio" autocomplete="off">1</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">2</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">3</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">4</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">5</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">6</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">7</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">8</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">9</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">10</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">11</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">12</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">13</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">14</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">15</label>
+          <label class="btn btn-default"><input type="radio" autocomplete="off">16</label>
+        </div>
+      </form>
+
+      <!-- KEYBOARD SHORTCUTS -->
+      <div class="row">
+        <div class="col-md-4 col-lg-3 right-float-panel" id="ks-container">
+        </div>
+      </div>
+
+      <!-- CHEAT SHEETS -->
+      <div class="row">
+        <div class="col-md-5 col-lg-4 right-float-panel" id="cs-container">
+        </div>
+      </div>
+
+      <!-- PRESET VOICE LIST -->
+      <div class="row">
+        <div class="col-md-4 col-lg-3 right-float-panel" id="vs-container">
+          <div id="preset-voice" class="panel panel-info">
+            <div class="panel-heading">
+              <h4 class="panel-title">SiON Preset Voice List
+                <button type="button" class="close" onclick="$('#vs-container').hide();"><span aria-hidden="true">&times;</span></button>
+              </h4>
+            </div>
+            <div class="panel-body">
+              <div class="alert alert-info" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                Click to play sample. Second click to insert mml.
+              </div>
+              <div class="panel-group" id="preset-voice-list" role="tablist" aria-multiselectable="true">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- FILE LIST DIALOG -->
+      <div class="modal fade" id="mml-list-dialog" tabindex="-1" role="dialog" aria-labelledby="mml-list-dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Explore <a href="https://github.com/keim/SiONMML/tree/master/mmltalks" target="_blank">MMLTalks</a> repository</h4>
+            </div>
+            <div class="modal-body" style="overflow:auto;">
+              <div class="list-group" id="mml-list">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+
+
+

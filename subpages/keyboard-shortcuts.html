@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <title>keyborad shortcuts</title>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12" id="ks-container">
+        <div id="keyboard-shortcuts" class="panel panel-info">
+          <div class="panel-heading">
+            <h4 class="panel-title">Keyboard Shortcuts
+              <button type="button" class="close" onclick="$('#ks-container').hide();"><span aria-hidden="true">&times;</span></button>
+            </h4>
+          </div>
+          <div class="panel-body">
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-primary active">
+                <input type="radio" name="os" id="win" value=".ks-win" autocomplete="off" checked> Win/Linux
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="os" id="mac" value=".ks-mac" autocomplete="off"> Mac
+              </label>
+            </div>
+            <h3>SiON Operations</h3>
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr><th class='ks-win'>Win/Linux</th><th class='ks-mac'>Mac</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>&#x23ce;</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>&#x23ce;</kbd></td><td>Play/Stop MML</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Line Operations</h3>
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr><th class='ks-win'>Win/Linux</th><th class='ks-mac'>Mac</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>D</kbd></td><td>Remove line</td></tr>
+                <tr><td class='ks-win'><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd><i class="fa fa-arrow-down"></i></kbd>/<kbd><i class="fa fa-arrow-up"></i></kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>&#x2325;</kbd>+<kbd><i class="fa fa-arrow-down"></i></kbd>/<kbd><i class="fa fa-arrow-up"></i></kbd></td><td>Copy lines down/up</td></tr>
+                <tr><td class='ks-win'><kbd>Alt</kbd>+<kbd><i class="fa fa-arrow-down"></i></kbd>/<kbd><i class="fa fa-arrow-up"></i></kbd></td><td class='ks-mac'><kbd>&#x2325;</kbd>+<kbd><i class="fa fa-arrow-down"></i></kbd>/<kbd><i class="fa fa-arrow-up"></i></kbd></td><td>Move lines down/up</td></tr>
+                <tr><td class='ks-win'><kbd>Alt</kbd>+<kbd>Delete</kbd></td><td class='ks-mac'><kbd>Ctrl</kbd>+<kbd>K</kbd></td><td>Remove to line end</td></tr>
+                <tr><td class='ks-win'><kbd>Alt</kbd>+<kbd>Backspace</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>Backspace</kbd></td><td>Remove to linestart</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>Delete</kbd></td><td class='ks-mac'><kbd>&#x2325;</kbd>+<kbd>Delete</kbd></td><td>Remove word right</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>Backspace</kbd></td><td class='ks-mac'><kbd>&#x2325;</kbd>+<kbd>Backspace</kbd><br/><kbd>Ctrl</kbd>+<kbd>&#x2325;</kbd>+<kbd>Backspace</kbd></td><td>Remove word left</td></tr>
+                <tr><td class='ks-win'>---</td><td class='ks-mac'><kbd>Ctrl</kbd>+<kbd>O</kbd></td><td>Split line</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Line Operations</h3>
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr><th class='ks-win'>Win/Linux</th><th class='ks-mac'>Mac</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>A</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>A</kbd></td><td>Select all</td></tr>
+                <tr><td class='ks-win'><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd><i class="fa fa-arrow-right"></i></kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>Shift</kbd>+<kbd><i class="fa fa-arrow-right"></i></kbd></td><td>Select to line end</td></tr>
+                <tr><td class='ks-win'><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd><i class="fa fa-arrow-left"></i></kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>Shift</kbd>+<kbd><i class="fa fa-arrow-left"></i></kbd></td><td>Select to line start</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd></td><td>Duplicate selection</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd></td><td class='ks-mac'>---</td><td>Select to matching bracket</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Multicursor</h3>
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr><th class='ks-win'>Win/Linux</th><th class='ks-mac'>Mac</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd><i class="fa fa-arrow-up"></i></kbd>/<kbd><i class="fa fa-arrow-down"></i></kbd>/<kbd><i class="fa fa-arrow-left"></i></kbd>/<kbd><i class="fa fa-arrow-right"></i></kbd></td><td class='ks-mac'><kbd>Ctrl</kbd>+<kbd>&#x2325;</kbd>+<kbd><i class="fa fa-arrow-up"></i></kbd>/<kbd><i class="fa fa-arrow-down"></i></kbd>/<kbd><i class="fa fa-arrow-left"></i></kbd>/<kbd><i class="fa fa-arrow-right"></i></kbd></td><td>Add multi-cursor</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd><i class="fa fa-arrow-up"></i></kbd>/<kbd><i class="fa fa-arrow-down"></i></kbd>/<kbd><i class="fa fa-arrow-left"></i></kbd>/<kbd><i class="fa fa-arrow-right"></i></kbd></td><td class='ks-mac'><kbd>Ctrl</kbd>+<kbd>&#x2325;</kbd>+<kbd>Shift</kbd>+<kbd><i class="fa fa-arrow-up"></i></kbd>/<kbd><i class="fa fa-arrow-down"></i></kbd>/<kbd><i class="fa fa-arrow-left"></i></kbd>/<kbd><i class="fa fa-arrow-right"></i></kbd></td><td>Move multicursor</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd></td><td class='ks-mac'><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd></td><td>Select all from multi-selection</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Go to</h3>
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr><th class='ks-win'>Win/Linux</th><th class='ks-mac'>Mac</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class='ks-win'><kbd>Alt</kbd>+<kbd><i class="fa fa-arrow-left"></i></kbd>/<kbd><i class="fa fa-arrow-right"></i></kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd><i class="fa fa-arrow-left"></i></kbd>/<kbd><i class="fa fa-arrow-right"></i></kbd><br/><kbd>Ctrl</kbd>+<kbd>A</kbd>/<kbd>E</kbd></td><td>Go to line start/end</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>Home</kbd>/<kbd>End</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>Home</kbd>/<kbd>End</kbd><br/><kbd>&#x2318;</kbd>+<kbd><i class="fa fa-arrow-up"></i></kbd>/<kbd><i class="fa fa-arrow-down"></i></kbd></td><td>Go to start/end</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>L</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>L</kbd></td><td>Go to line</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd><i class="fa fa-arrow-down"></i></kbd>/<kbd><i class="fa fa-arrow-up"></i></kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd><i class="fa fa-arrow-down"></i></kbd>/<kbd><i class="fa fa-arrow-up"></i></kbd></td><td>Scroll line down/up</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>P</kbd></td><td class='ks-mac'>---</td><td>Go to matching bracket</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Find/Replace</h3>
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr><th class='ks-win'>Win/Linux</th><th class='ks-mac'>Mac</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>F</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>F</kbd></td><td>Find</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>H</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>&#x2325;</kbd>+<kbd>F</kbd></td><td>Replace</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>K</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>G</kbd></td><td>Find next</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>K</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd></td><td>Find previous</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Folding</h3>
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr><th class='ks-win'>Win/Linux</th><th class='ks-mac'>Mac</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class='ks-win'><kbd>Alt</kbd>+<kbd>L</kbd><br/><kbd>Ctrl</kbd>+<kbd>F1</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>&#x2325;</kbd>+<kbd>L</kbd><br/><kbd>&#x2318;</kbd>+<kbd>F1</kbd></td><td>Fold selection</td></tr>
+                <tr><td class='ks-win'><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd><br/><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F1</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>&#x2325;</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd><br/><kbd>&#x2318;</kbd>+<kbd>Shift</kbd>+<kbd>F1</kbd></td><td>Unfold</td></tr>
+                <tr><td class='ks-win'><kbd>Alt</kbd>+<kbd>0</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>&#x2325;</kbd>+<kbd>0</kbd></td><td>Fold all</td></tr>
+                <tr><td class='ks-win'><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>0</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>&#x2325;</kbd>+<kbd>Shift</kbd>+<kbd>0</kbd></td><td>Unfold all</td></tr>
+              </tbody>
+            </table>
+
+            <h3>Others</h3>
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr><th class='ks-win'>Win/Linux</th><th class='ks-mac'>Mac</th><th>Description</th></tr>
+              </thead>
+                <tr><td class='ks-win'><kbd>Tab</kbd></td><td class='ks-mac'><kbd>Tab</kbd></td><td>Indent</td></tr>
+                <tr><td class='ks-win'><kbd>Shift</kbd>+<kbd>Tab</kbd></td><td class='ks-mac'><kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>Outdent</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>Z</kbd></td><td>undo</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd><br/><kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd><br/><kbd>&#x2318;</kbd>+<kbd>Y</kbd></td><td>Redo</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>,</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>,</kbd></td><td>Show the settings menu</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>/</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>/</kbd></td><td>Toggle comment</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>T</kbd></td><td class='ks-mac'><kbd>Ctrl</kbd>+<kbd>T</kbd></td><td>Transpose letters</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>&#x23ce;</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>&#x23ce;</kbd></td><td>Enter full screen</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd></td><td class='ks-mac'><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd></td><td>Change to lower case</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>U</kbd></td><td class='ks-mac'><kbd>Ctrl</kbd>+<kbd>U</kbd></td><td>Change to upper case</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd></td><td class='ks-mac'><kbd>&#x2318;</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd></td><td>Macros replay</td></tr>
+                <tr><td class='ks-win'><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>E</kbd></td><td class='ks-mac'>---</td><td>Macros recording</td></tr>
+                <tr><td class='ks-win'>---</td><td class='ks-mac'><kbd>Ctrl</kbd>+<kbd>L</kbd></td><td>Center selection</td></tr>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

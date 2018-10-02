@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <title>keyborad shortcuts</title>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12" id="cs-container">
+        <div id="cheat-sheets" class="panel panel-info">
+          <div class="panel-heading">
+            <h4 class="panel-title">SiON MML Cheat Sheet
+              <button type="button" class="close" onclick="$('#cs-container').hide();"><span aria-hidden="true">&times;</span></button>
+            </h4>
+          </div>
+          <div class="panel-body">
+            <ul class="nav nav-tabs nav-tabs-sm">
+              <li><a data-toggle="tab" href="#system">システム</a></li>
+              <li class="active"><a data-toggle="tab" href="#mml">MML</a></li>
+              <li><a data-toggle="tab" href="#menu2">音色定義</a></li>
+              <li><a data-toggle="tab" href="#menu3">エフェクタ</a></li>
+            </ul>
+
+            <div class="tab-content">
+              <div id="system" class="tab-pane fade in">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">システムコマンド <small><a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#system-command" target="_reference">[詳細]</a></small></h3>
+                  </div>
+                  <div class="list-group">
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#TITLE{<i> タイトル </i>};</h4><p class="list-group-item-text">タイトル</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#SIGN{<i> 調性 </i>};</h4><p class="list-group-item-text">調性指定(ex."Cm")で変化記号(シャープ/フラット)付与</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#REV;</h4><p class="list-group-item-text">"&lt;"オクターブダウン,"&gt;"オクターブアップに記号の意味を反転(音量も同様)</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#EFFECT<i>[スロット番号] </i>{<i> エフェクタ記述 </i>}<i> (音量MML) </i>;</h4><p class="list-group-item-text">エフェクタ接続定義。#0~#7の各出力スロットに接続するエフェクタを設定。#0スロットに設定したエフェクタは全出力に適用。<code>@v</code>で各スロットへのセンドレベルを指定。</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">//<i> 一行コメント </i></h4><p class="list-group-item-text">一行コメント</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">/*<i> 複数行コメント </i> */</h4><p class="list-group-item-text">複数行コメント</p></div>
+                  </div>
+                </div>
+
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">マクロ定義/展開 <small><a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#define-macro" target="_reference">[詳細]</a></small></h3>
+                  </div>
+                  <div class="list-group">
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#A=<i>MML </i>;</h4><p class="list-group-item-text">mmlマクロ定義。<code>#A</code>~<code>#Z</code>まで登録可能</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#A+=<i>MML </i>;</h4><p class="list-group-item-text">mmlマクロ文字列追加</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">A</h4><p class="list-group-item-text">#Aコマンドで定義したMMLを展開。<code>A</code>~<code>Z</code>まで利用可能</p></div>
+                  </div>
+                </div>
+
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">テーブル定義コマンド <small><a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#define-table" target="_reference">[詳細]</a></small></h3>
+                  </div>
+                  <div class="list-group">
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#WAVB<i> [音色番号] </i>{<i> HEX文字列 </i>};</h4><p class="list-group-item-text">波形定義(HEX)。<code>%7@[音色番号]</code>で呼出</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#WAVC<i> [音色番号] </i>{<i> HEX文字列(8桁) </i>};</h4><p class="list-group-item-text">波形定義(下７桁がハモンドオルガンのドローバーの8~1に対応。上位１桁は基本波形)</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#TABLE<i> [テーブル番号] </i>{<i> テーブル定義 </i>};</h4><p class="list-group-item-text">テーブル定義。テーブルエンベロープで参照</p></div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="mml" class="tab-pane fade in active">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">シーケンス制御 <small><a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#sequence-control" target="_reference">[詳細]</a></small></h3>
+                  </div>
+                  <div class="list-group">
+                    <div class="list-group-item"><h4 class="list-group-item-heading">t<i> [BPM] </i></h4><p class="list-group-item-text">(<u>T</u>empo)テンポ指定</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">$</h4><p class="list-group-item-text">(segno)無限繰り返し。終端到達後、この位置に戻る</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">[...|...]<i> [ループ回数] </i></h4><p class="list-group-item-text">(loop)ループ。ループ内に<code>|</code>が有る場合，最後の繰り返しで<code>|</code>以降のMMLはスキップ</p></div>
+                  </div>
+                </div>
+
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">音程関連 <small><a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#pitch-related" target="_reference">[詳細]</a></small></h3>
+                  </div>
+                  <div class="list-group">
+                    <div class="list-group-item"><h4 class="list-group-item-heading">a~g<i> [長さ(省略可)] </i></h4><p class="list-group-item-text">(note)ノート。<code>c</code>~<code>b</code>がド~シに対応。数字を続けると長さ指定、省略時は<code>l</code>コマンド指定値</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">r<i> [長さ(省略可)] </i></h4><p class="list-group-item-text">(<u>R</u>est)休符．数字で長さ指定、省略時は<code>l</code>コマンド指定値</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">o<i> [オクターブ] </i></h4><p class="list-group-item-text">(<u>O</u>ctave)オクターブの指定．初期値<code>o5</code></p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">&gt;</h4><p class="list-group-item-text">１オクターブダウン(#REV指定時はオクターブアップ)</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">&lt;</h4><p class="list-group-item-text">１オクターブアップ(#REV指定時はオクターブダウン)</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">k<i> [デチューン値] </i></h4><p class="list-group-item-text">(<u>K</u>ey detune)デチューン。半音=64。<code>kt</code>コマンドと併用可</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">kt<i> [トランスポーズ値] </i></h4><p class="list-group-item-text">(<u>K</u>ey <u>T</u>ranspose)トランスポーズ。<code>k</code>コマンドと併用可</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">*</h4><p class="list-group-item-text">(pitch bend)ピッチベンド。直前/直後のノートをピッチ変移で繋げる</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">po<i> [遷移時間] </i></h4><p class="list-group-item-text">(<u>PO</u>rtament)ポルタメント。ノートをスラー<code>&amp;</code>で繋げるとピッチ変移させる。指定値で変移にかかる時間</p></div>
+                  </div>
+                </div>
+
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">音長関連 <small><a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#length-related" target="_reference">[詳細]</a></small></h3>
+                  </div>
+                  <div class="list-group">
+                    <div class="list-group-item"><h4 class="list-group-item-heading">l<i> [長さ] </i></h4><p class="list-group-item-text">(<u>L</u>ength)デフォルト音長指定。ノート/休符で音長省略時に適用される値</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">^<i> [長さ(省略可)] </i></h4><p class="list-group-item-text">(extension)音長加算．ノート/休符/デフォルト音長に指定値分加算</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">q<i> [キーオンの長さ] </i></h4><p class="list-group-item-text">(<u>G</u>ate time)ゲートタイム．キーオフのタイミングについて、全長に対する割合を最大値=8として指定。</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">&amp;</h4><p class="list-group-item-text">(slur)スラー。q/@qによる指定を無効化し、直前の音を次のノート/休符に繋げる。位相はリセットされない</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">&amp;&amp;</h4><p class="list-group-item-text">(weak slur)弱スラー。q/@qによる指定を無効化し、直前のノートを次のノート/休符に繋げる。位相はリセットされる</p></div>
+                  </div>
+                </div>
+
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">音量関連 <small><a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#volume-related" target="_reference">[詳細]</a></small></h3>
+                  </div>
+                  <div class="list-group">
+                    <div class="list-group-item"><h4 class="list-group-item-heading">v<i> [音量] </i></h4><p class="list-group-item-text">(<u>V</u>olume)ボリューム。v0で無音、v16で最大値、v16~32でディストーション。最大値は<code>%v</code>コマンドで設定可能</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">x<i> [音量] </i></h4><p class="list-group-item-text">(<u>EX</u>pression)エクスプレッション。x0で無音、x128で最大値。<code>na</code>, <code>_na</code>コマンドで書き換えられる</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">@v<i> [音量] </i>,<i> [エフェクトセンド1(省略可)] </i>,...</h4><p class="list-group-item-text">(m<u>@</u>ster <u>V</u>olume)マスターボリューム/エフェクトセンド。第一引数でマスターボリューム、第2～8引数でEffect slot#1~7へのセンドレベル指定</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">)</h4><p class="list-group-item-text">相対ボリュームダウン(<code>#REV</code>指定時はボリュームアップ)</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">(</h4><p class="list-group-item-text">相対ボリュームアップ(<code>#REV</code>指定時はボリュームダウン)</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">p<i> [定位] </i></h4><p class="list-group-item-text">(<u>P</u>anning)パン(<code>p0</code>左/<code>p4</code>中央/<code>p8</code>右)</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">@p<i> [定位] </i></h4><p class="list-group-item-text">(fine <u>P</u>anning)詳細パン(<code>p-64</code>左/<code>p0</code>中央/<code>p64</code>右)</p></div>
+                  </div>
+                </div>
+
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">音色関連 <small><a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#voice-related" target="_reference">[詳細]</a></small></h3>
+                  </div>
+                  <div class="list-group">
+                    <div class="list-group-item"><h4 class="list-group-item-heading">%<i> [音源] </i>,<i> [チャンネル(省略可)] </i></h4><p class="list-group-item-text">(module)音源モジュール指定。第一引数で音源の種類、第二引数でチャンネル番号。<button data-toggle="collapse" data-target="#module" class="btn btn-xs btn-info">音源音色リスト</button></p>
+                      <div id="module" class="collapse">
+                        <br/>
+                        <table class="table"><tbody>
+                          <tr>
+                            <th width='120'>'%'第一引数</th>
+                            <th>'@'第一引数</th>
+                          </tr>
+                          <tr>
+                            <td>%0<br/>PSG</td>
+                            <td><h4>AY-3-8910/SN76489 相当</h4>
+                              <table class='no_border'><tbody>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@0<span class='mml'>%0@0cde</span></td><td>矩形波</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@1<span class='mml'>#TABLE0{(0,16)16};%0@1nt0,20q8o0c1^1^1</span></td><td>PulseNoise(o0c~o2g+)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@2<span class='mml'>%0@2cde</span></td><td>PeriodicNoise(ピッチ指定)</td><tr>
+                               </tbody></table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>%1<br/>FC</td>
+                            <td><h4>ファミコン音源 pAPU(2a03) 相当</h4>
+                              <table class='no_border'><tbody>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@0-7<span class='mml'>#TABLE0{(0,8)8};%1@@0,20q8c1.</span></td><td>デューティ比指定矩形波</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@8<span class='mml'>%1@8cde</span></td></td><td>ファミコン三角波(8bit量子化三角波)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@9<span class='mml'>#TABLE0{(0,16)16};%1@9nt0,20q8o0c1^1^1</span></td><td>PulseNoise(o0c~o1d+)</td><tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@10<span class='mml'>#TABLE0{(0,16)16};%1@10nt0,20q8o0c1^1^1</span></td><td>93bitNoise(o0c~o1d+)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@11<span class='mml'></span></td><td>PCM呼出。"%7@0" と同等</td></tr>
+                              </tbody></table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>%2<br/>Noise</td>
+                            <td><h4>ノイズユニット</h4>
+                              <table class='no_border'><tbody>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@0<span class='mml'>%2@0c</span></td><td>WhiteNoise</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@1<span class='mml'>%2@1c</span></td><td>PulseNoise</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@2<span class='mml'>%2@2c</span></td><td>93bitNoise(15bit LFSR)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@3<span class='mml'>%2@3c</span></td><td>Hi-pass Noise</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@4<span class='mml'>%2@4c</span></td><td>PinkNoise(1/fノイズ)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@5<span class='mml'>%2@5c</span></td><td>128bit Noise (16bit LFSR Short noise)</td><tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@8<span class='mml'>%2@8cde</span></td><td>PeriodicNoise（16bit LFSR）</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@9<span class='mml'>%2@9cde</span></td><td>93bitNoise（ノートによるピッチ指定）</td></tr>
+                              </tbody></table>
+                             </td>
+                          </tr>
+                          <tr>
+                            <td>%3<br/>MA3</td>
+                            <td><h4>ガラケーFM音源YMU762の波形(@0~7はOPL3/OPX互換)</h4>
+                              <table class='no_border'><tbody>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@0<span class='mml'>%3@0cde</span></td><td>サイン波</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@1<span class='mml'>%3@1cde</span></td><td>半波整流サイン波</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@2<span class='mml'>%3@2cde</span></td><td>全波整流サイン波</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@3<span class='mml'>%3@3cde</span></td><td>全波整流サイン波(0~pi/2,pi~3pi/2)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@4<span class='mml'>%3@4cde</span></td><td>倍周波サイン波(0~pi)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@5<span class='mml'>%3@5cde</span></td><td>倍周波全波整流サイン波(0~pi)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@8-13<span class='mml'>#TABLE0{(0,6)6}+8;%3@@0,20q8c1</span></td><td>@0~5を振幅2倍歪みサイン波</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@16-21<span class='mml'>#TABLE0{(0,6)6}+16;%3@@0,20q8c1</span></td><td>@0~5を三角波</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@24-29<span class='mml'>#TABLE0{(0,6)6}+24;%3@@0,20q8c1</span></td><td>@0~5をのこぎり波(upward)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@6<span class='mml'>%3@6cde</span></td><td>矩形波</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@14<span class='mml'>%3@14cde</span></td><td>半波整流矩形波</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@22<span class='mml'>%3@22cde</span></td><td>倍周波半波整流矩形波</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@30<span class='mml'>%3@30cde</span></td><td>倍周波半波整流矩形波(0~pi)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@7<span class='mml'>%3@7cde</span></td><td>1-sin(0~pi/2),-1-sin(3pi/2~2pi)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@15,23,31 <span class='mml'></span></td><td>%4@[0-2]と同等．</td></tr>
+                              </tbody></table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>%4<br/>Wave Table</td>
+                            <td><h4>波形メモリ音源</h4>#WAV, #WAVB, #WAVC で設定した波形を指定</td>
+                          </tr>
+                          <tr>
+                            <td>%5<br/>all</td>
+                            <td><h4>SiONの全波形参照</h4>
+                              <table class='no_border'><tbody>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@0<span class='mml'>%5@0cde</span></td><td>sin波</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@1<span class='mml'>%5@1cde</span></td><td>のこぎり波(upward saw)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@2<span class='mml'>%5@2cde</span></td><td>のこぎり波(downward saw)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@3<span class='mml'>%5@3cde</span></td><td>ファミコン三角波(8bitクオンタイズ)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@4<span class='mml'>%5@4cde</span></td><td>三角波</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@5<span class='mml'>%5@5cde</span></td><td>矩形波</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@6<span class='mml'>%5@6cde</span></td><td>ホワイトノイズ(@16と同)</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@7<span class='mml'>%5@7cde</span></td><td>WaveMemory sample</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@8<span class='mml'>%5@8cde</span></td><td>スードシンク(低周波)．output = -p/2PI</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@9<span class='mml'>%5@9cde</span></td><td>スードシンク(高周波)．output = p/2PI</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@10<span class='mml'>%5@10cde</span></td><td>オフセット．output = 1</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@16-31<span class='mml'>#TABLE0{(16,32)16};%5@@0,20q8c1^1^1</span></td><td>ノイズ波．%2@([指定値]-16)と同等</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@32-63<span class='mml'>#TABLE0{(32,64)32};%5@@0,10q8c1^1^1</span></td><td>MA3波形． %3@([指定値]-32)と同等</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@64-95<span class='mml'>#TABLE0{(64,96)32};%5@@0,10q8c1^1^1</span></td><td>パルス波．%8@([指定値]-64)と同等</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@128-255<span class='mml'>#TABLE0{(128,256)128};%5@@0,4q8c1^1^1^1</span></td><td>ランプ波．%9@([指定値]-128)と同等</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@256-511<span class='mml'></span></td><td>WaveTable波形を指定．%4@([指定値]-256)と同等</td></tr>
+                              </tbody></table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>%6<br/>FM</td>
+                            <td><h4>FM音源</h4><code>#@</code>, <code>#OPL@</code>, <code>#OPM@</code>, <code>#OPN@</code>, <code>#OPX@</code>, <code>#MA@</code>, <code>#AL@</code>で設定した音色を指定</td>
+                          </tr>
+                          <tr>
+                            <td>%7<br/>PCM</td>
+                            <td><h4>PCM音源</h4><a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#voice-related-pcm" target="_reference">[詳細]</a> ロードしたmp3ファイルのPCM再生。<code>o5a</code>でオリジナル周波数再生</td>
+                          </tr>
+                          <tr>
+                            <td>%8<br/>Pulse</td>
+                            <td><h4>パルス波</h4>@0-15/@16-31でデューティ比を指定
+                              <table class='no_border'><tbody>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@0-15<span class='mml'>#TABLE0{(0,16)16};%8@@0,20q8c1^1^1</span></td><td>(1,-1)。位相=PI*[index]/8で反転</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@16-31<span class='mml'>#TABLE0{(16,32)16};%8@@0,20q8c1^1^1</span></td><td>(1,-1,0)。位相=PI*([index]-16)/16で反転、位相=PI*[index]/8以降0</tr>
+                              </tbody></table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>%9<br/>Ramp</td>
+                            <td><h4>ランプ波</h4>のこぎり波と三角波の間の波形
+                              <table class='no_border'><tbody>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@0-63<span class='mml'>#TABLE0{(0,64)64};%9@@0,2q8c1^1</span></td><td>のこぎり波(upward)→三角波</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@64-127<span class='mml'>#TABLE0{(64,128)64};%9@@0,2q8c1^1</span></td><td>三角波→のこぎり波(downward)</tr>
+                              </tbody></table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>%10<br/>Sampler</td>
+                            <td><h4>サンプラー</h4><a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#voice-related-pcm" target="_reference">[詳細]</a> ロードしたmp3ファイルを再生。再生周波数は変更できない
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>%11<br/>PMS Guitar</td>
+                            <td><h4>物理音源ギター</h4><a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#voice-related-pms" target="_reference">[引数詳細]</a> Karplus-Strong 撥弦物理音源
+                              <table class='no_border'><tbody>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@0,48,48,0,0,20s8<span class='mml'>%11@ph-1o3e1^1^2^8;%11@ph-1o3r8a1^1^2;%11@ph-1o4r4d1^1^4.;%11@ph-1r4.o4g1^1^4;%11@ph-1r2o4b1^1;%11@ph-1r8^2o5e1^1^8;</span></td><td>ナイロン弦ギター</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@0,48,48,0,0,16s4<span class='mml'>#T=%11@0,48,48,0,0,16s4@ph-1q8;t160;To3v12a1^1;To4v8r64e1^1;To4v7r32a1^1;To4v7r32.b1^1;To5v6r16e1^1;</span></td><td>スチール弦ギター</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@0,48,40,4,0,16s6@f96,0<span class='mml'>#EFFECT0{chorus delay};#T=%11@0,48,40,4,0,16s6@ph-1@f96,0q8;t160;To3v12$a1^1;To4v8r4$e1^1;To4v7r4.$a4a4a2a4a4a2;To4v7r2.$b2b2b1;To5v6r1$e1^1;</span></td><td>クリーンギター</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@0,48,24,8,0,17s2@f80<span class='mml'>#T=%11@0,48,24,8,0,17s2@f80mp0,6,10,10@ph-1@v64,16;t160;#M=o3q8l8aga&lt;c^2&gt;aga&lt;c*d0rc4.&gt;aga&lt;d*edc&gt;s,-63a1^1;Tv12M;Tv8kt7M;</span></td><td>ディストーションギター</td></tr>
+                                <tr><td class='mmlbtn btn btn-default btn-xs'>@0,48,40,4,80,18s32<span class='mml'>t144;%11@0,48,40,4,80,18s32q8o2q8l8$v16av12a&lt;c16cc+s40c+16s32deg&gt;a16&lt;s48a16&gt;s32a&lt;c&c+16de16&gt;v8s48ev12s32f+g+;</span></td><td>スラップベース</td></tr>
+                              </tbody></table>
+                            </td>
+                          </tr>
+                        </tbody></table>
+                      </div>
+                    </div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">@<i> [音色] </i>, ...(15引数)</h4><p class="list-group-item-text">(mmlbtn)音色/エンベロープ設定。第一引数で音色指定(音源により異なる)、第二引数以降でエンベロープなど。<button data-toggle="collapse" data-target="#ataug" class="btn btn-xs btn-info">引数</button></p>
+                      <div id="ataug" class="collapse">
+                        <br/><pre>@ [ws], [ar], [dr], [sr], [rr], [sl], [tl], [ksr], [ksl], [mul], [dt1], [detune], [ams], [phase], [fixedNote]</pre>
+                        <p>第1引数で音色選択(ws)、第2~7引数でエンベロープ(ar~tl)、第8,9引数でキースケール(ks*)、第10~12引数で周波数(mul~detune)、第13~15引数でその他設定(ams~)。第2~15パラメータが省略された場合、その値は変更されない。</p>
+                        <table class='table'><tbody>
+                          <tr><td>ws</td><td>(Wave Shape)音色番号[0-512]。%5における音色番号を指定</td></tr>
+                          <tr><td>ar</td><td>(Attack Rate)キーオン後の立ち上がり[0-63]。大きい値ほど早い。63=即発音</td></tr>
+                          <tr><td>dr</td><td>(Decay Rate)TL到達後の減衰[0-63]。小さい値ほど遅い。0=減衰無し</td></tr>
+                          <tr><td>sr</td><td>(Sustain Rate)SL到達後の音の減衰[0-63]。小さい値ほど遅い。0=減衰無し</td></tr>
+                          <tr><td>rr</td><td>(Release Rate)キーオフ後の減衰[0-63]。小さい値ほど遅い。0=キーオフ無効、63=即消音</td></tr>
+                          <tr><td>sl</td><td>(Sustain Level)dr→sr遷移音量をTLとの相対値で指定[0-15]。0が最大値、sl2=6[dB]</td></tr>
+                          <tr><td>tl</td><td>(Total Level)エンベロープの最大音量を指定[0-127]。0が最大値、tl8=6[dB]</td></tr>
+                          <tr><td>ksr</td><td>(Key Scale Rate)高ピッチでエンベロープを早くする[0-3]（ksr0=0.4～ksr3=3.2[rate/oct])</td></tr>
+                          <tr><td>ksl</td><td>(Key Scale Level)高ピッチでTLを下げる[0-3]（ksl0=オフ～ksl3=-0.6[dB/oct])</td></tr>
+                          <tr><td>mul</td><td>(Multiple)再生周波数を指定値倍する[0-15]。mul0は0.5倍</td></tr>
+                          <tr><td>dt1</td><td>(Detune1)opm/opnの'dt1'相当[0-7]。再生周波数を微調整（0-3でピッチ上，4-7でピッチ下げ）</td></tr>
+                          <tr><td>detune</td><td>(Detune)再生ピッチシフト[-8192-8191(0)]。det64=1半音</td></tr>
+                          <tr><td>ams</td><td>(Amplitude Modulation Shift)音量モジュレーション(ma)による音量変化の度合い[0-3]。ams0=オフ</td></tr>
+                          <tr><td>phase</td><td>(Phase)キーオン時の位相[-1-255](255=リセットしない、-1=乱数)</td></tr>
+                          <tr><td>fixedNote</td><td>(Fixed note)音程を固定。0=固定しない。60=o5c</td></tr>
+                        </tbody></table>
+                      </div>
+                    </div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">%f<i> [フィルタ種類] </i></h4><p class="list-group-item-text">(<u>F</u>ilter mode)フィルタの種類指定(0=ローパス/1=バンドパス/2=ハイパス)。初期値=0</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">@f<i> [カットオフ] </i>,<i> [レゾナンス(省略可)] </i>, ...(10引数)</h4><p class="list-group-item-text">(<u>F</u>ilter)フィルタ設定。第一引数でカットオフ、第二引数でレゾナンス。第三引数以降でエンベロープ。<button data-toggle="collapse" data-target="#atf" class="btn btn-xs btn-info">引数</button></p>
+                      <div id="atf" class="collapse">
+                        <br/><pre>@f [cutoff], [res], [ar], [dr], [sr], [rr], [co2], [co3], [sco], [rco]</pre>
+                        <p>第1,2引数で基本的なフィルタ設定、第3-10引数でエンベロープ設定。第3~10パラメータが省略された場合、その値は変更されない。</p>
+                        <table class='table'><tbody>
+                          <tr><td>cutoff</td><td>(Cutoff Freq.)カットオフ周波数[0-128]</td></tr>
+                          <tr><td>res</td><td>(Resonance)レゾナンス[0-9]</td></tr>
+                          <tr><td>ar</td><td>(Attack Rate)アタック[0-63]。cutoff→co2の遷移速度。小さい値ほど遅い。0=無変更/63=即時変更</td></tr>
+                          <tr><td>dr</td><td>(Decay Rate)ディケイ[0-63]。co2→co3の遷移速度。小さい値ほど遅い。0=無変更/63=即時変更</td></tr>
+                          <tr><td>sr</td><td>(Sustain Rate)サスティン[0-63]。co3→scoの遷移速度。小さい値ほど遅い。0=無変更/63=即時変更</td></tr>
+                          <tr><td>rr</td><td>(Release Rate)リリース[0-63]。キーオフ後のrcoへの遷移速度。小さい値ほど遅い。0=無変更/63=即時変更</td></tr>
+                          <tr><td>co2</td><td>(Cutoff Freq.#2)カットオフ周波数2[0-128]。キーオン後、cutoffの次に遷移する周波数</td></tr>
+                          <tr><td>co3</td><td>(Cutoff Freq.#3)カットオフ周波数3[0-128]。カットオフ周波数2の次に遷移する周波数</td></tr>
+                          <tr><td>sc</td><td>(Sustain CutOff)サスティンカットオフ[0-128]。カットオフ周波数3の次に遷移する周波数。キーオフまでこの周波数が維持される</td></tr>
+                          <tr><td>rc</td><td>(Release CutOff)リリースカットオフ[0-128]。キーオフ後に遷移する周波数</td></tr>
+                        </tbody></table>
+                        <img src="http://keim.github.io/sion/mmlref/image/filter.png" alt='filter parameters' title='filter parameters' width="100%"/>
+                      </div>
+                    </div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">s<i> [Release Rate] </i>,<i> [スイープ(省略可)] </i></h4><p class="list-group-item-text">(<u>S</u>ustain sweep)リリース設定。第一引数でファイナルキャリアのRelease Rateを指定。第二引数でキーオフ後のピッチスイープを指定</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">@lfo<i> [周期] </i>,<i> [波形(省略可)] </i></h4><p class="list-group-item-text">モジュレーション周期設定．第一引数でLFO周期、第二引数で波形指定(0=saw, 1=square, 2=triangle, 3=random, 4~7=0~3の反転)。</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">mp<i> [ビブラート幅] </i>, ...(4引数)</h4><p class="list-group-item-text">(<u>P</u>itch <u>M</u>odulation)音程モジュレーション(ビブラート)設定。<button data-toggle="collapse" data-target="#modaug" class="btn btn-xs btn-info">引数</button></p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">ma<i> [トレモロ幅] </i>, ...(4引数)</h4><p class="list-group-item-text">(<u>A</u>mplitude <u>M</u>odulation)音量モジュレーション(トレモロ)設定。<button data-toggle="collapse" data-target="#modaug" class="btn btn-xs btn-info">引数</button></p>
+                      <div id="modaug" class="collapse">
+                        <br/><pre>mp/ma [depth], [end_depth], [delay], [changing_time]</pre>
+                        <p>[depth]振幅でモジュレーションがかかる。'[depth]&lt;[end_depth]'の場合、[delay]フレームの間[depth]振幅を維持し、[changing_time]フレームで[end_depth]の振幅に移行する。</p>
+                        <table class='table'><tbody>
+                          <tr><td>depth</td><td>(Cutoff Freq.)カットオフ周波数[0-128]</td></tr>
+                          <tr><td>end_depth</td><td>(Resonance)レゾナンス[0-9]</td></tr>
+                          <tr><td>delay</td><td>(Attack Rate)アタック[0-63]。cutoff→co2の遷移速度。小さい値ほど遅い。0=無変更/63=即時変更</td></tr>
+                          <tr><td>changing_time</td><td>(Decay Rate)ディケイ[0-63]。co2→co3の遷移速度。小さい値ほど遅い。0=無変更/63=即時変更</td></tr>
+                        </tbody></table>
+                        <img src='http://keim.github.io/sion/mmlref/image/modulation.png' alt='modulation parameters' title='modulation parameters' width="100%"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">テーブルエンベロープ <small><a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#table-envelope" target="_reference">[詳細]</a></small></h3>
+                  </div>
+                  <div class="list-group">
+                    <div class="list-group-item"><h4 class="list-group-item-heading">@@<i> [テーブル番号] </i>,<i> [速度(省略可)] </i></h4><p class="list-group-item-text">(mmlbtn envelop)音色エンベロープ。<code>@</code>コマンドをテーブルで操作</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">na<i> [テーブル番号] </i>,<i> [速度(省略可)] </i></h4><p class="list-group-item-text">(<u>A</u>mplitude <u>EN</u>velop)音量エンベロープ。<code>x</code>コマンドをテーブルで操作</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">np<i> [テーブル番号] </i>,<i> [速度(省略可)] </i></h4><p class="list-group-item-text">(<u>P</u>itch <u>EN</u>velop)音程エンベロープ。<code>k</code>コマンドをテーブルで操作</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">nt<i> [テーブル番号] </i>,<i> [速度(省略可)] </i></h4><p class="list-group-item-text">(no<u>T</u>e <u>EN</u>velop)ノートエンベロープ。<code>kt</code>コマンドをテーブルで操作</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">nf<i> [テーブル番号] </i>,<i> [速度(省略可)] </i></h4><p class="list-group-item-text">(<u>F</u>ilter <u>EN</u>velop)フィルターエンベロープ。<code>@f</code>コマンドをテーブルで操作</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">_@@<i> [テーブル番号] </i>,<i> [速度(省略可)] </i></h4><p class="list-group-item-text">(release mmlbtn envelop)リリース音色エンベロープ。キーオフ後に<code>@</code>コマンドをテーブルで操作</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">_na<i> [テーブル番号] </i>,<i> [速度(省略可)] </i></h4><p class="list-group-item-text">(release <u>A</u>mplitude <u>EN</u>velop)リリース音量エンベロープ。キーオフ後に<code>x</code>コマンドをテーブルで操作。"s0"でReleaseRateを0にしておく。</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">_np<i> [テーブル番号] </i>,<i> [速度(省略可)] </i></h4><p class="list-group-item-text">(release <u>P</u>itch <u>EN</u>velop)リリース音程エンベロープ。キーオフ後に<code>k</code>コマンドをテーブルで操作</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">_nt<i> [テーブル番号] </i>,<i> [速度(省略可)] </i></h4><p class="list-group-item-text">(release no<u>T</u>e <u>EN</u>velop)リリースノートエンベロープ。キーオフ後に<code>kt</code>コマンドをテーブルで操作</p></div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">_nf<i> [テーブル番号] </i>,<i> [速度(省略可)] </i></h4><p class="list-group-item-text">(release <u>F</u>ilter <u>EN</u>velop)リリースフィルターエンベロープ。キーオフ後に<code>@f</code>コマンドをテーブルで操作</p></div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="menu2" class="tab-pane fade　in">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">音色定義コマンド <small><a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#define-fmvoice" target="_reference">[詳細]</a></small></h3>
+                  </div>
+                  <div class="panel-body">定義した音色は<code>%6@[音色番号]</code>で呼出。<code>{...}</code>内では、数字以外は全て区切り文字として認識される。オペレータの数は<code>{...}</code>内で指定されたパラメータ数で定義される。<code>{...}</code>の後に<code>a</code>~<code>g</code>, <code>r</code>, <code>%</code>, <code>@</code><b>以外</b>を指定可能。<a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#voice-related-alg" target="_reference">[algパラメター(op接続)表]</a></div>
+                  <div class="list-group">
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#@<i> [音色番号] </i>{<i> 音源設定 </i>}<i> (音色MML) </i>;</h4><p class="list-group-item-text">FM音源音色定義(SiON独自拡張)。%6@[音色番号]で呼出</p>
+<pre>#@0{ alg[0~12], fb[0~7], fbc[0~3],
+(ws[0~511], ar[0~63], dr[0~63], sr[0~63], rr[0~63], 
+sl[0~15], tl[0~127], ksr[0~3], ksl[0~3], 
+mul[0~15], dt1[0~7], detune[-8192~8191], 
+ams[0~3], phase[-1~255], fixedNote[0~127]) x 1~4};</pre>
+                    </div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#OPL@<i> [音色番号] </i>{<i> 音源設定 </i>}<i> (音色MML) </i>;</h4><p class="list-group-item-text">FM音源音色定義(OPL3:YMF262相当)。%6@[音色番号]で呼出</p>
+<pre>#OPL@0{ alg[0-3], fb[0-7], 
+(ws[0-7], ar[0-15], dr[0-15], rr[0-15], egt[0,1], 
+sl[0-15], tl[0-63], ksr[0,1], ksl[0-3], 
+mul[0-15], ams[0-3]) x 1~4};</pre>
+                    </div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#OPM@<i> [音色番号] </i>{<i> 音源設定 </i>}<i> (音色MML) </i>;</h4><p class="list-group-item-text">FM音源音色定義(OPM:YM2151相当)。%6@[音色番号]で呼出</p>
+<pre>#OPM@0{ alg[0-7], fb[0-7], 
+(ar[0-31], dr[0-31], sr[0-31], rr[0-15], 
+sl[0-15], tl[0-127], ks[0-3], 
+mul[0-15], dt1[0-7], dt2[0-3], ams[0-3]) x 1~4};</pre>
+                    </div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#OPN@<i> [音色番号] </i>{<i> 音源設定 </i>}<i> (音色MML) </i>;</h4><p class="list-group-item-text">FM音源音色定義(OPNA:YM2608相当)。%6@[音色番号]で呼出</p>
+<pre>#OPN@0{ alg[0-7], fb[0-7], 
+(ar[0-31], dr[0-31], sr[0-31], rr[0-15], 
+sl[0-15], tl[0-127], ks[0-3], 
+mul[0-15], dt1[0-7], ams[0-3]) x 1~4};</pre>
+                    </div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#OPX@<i> [音色番号] </i>{<i> 音源設定 </i>}<i> (音色MML) </i>;</h4><p class="list-group-item-text">FM音源音色定義(OPX:YMF271相当)。%6@[音色番号]で呼出</p>
+<pre>#OPX@0{ alg[0-15], fb[0-7], 
+(ws[0-7], ar[0-31], dr[0-31], sr[0-31], rr[0-15], 
+sl[0-15], tl[0-127], ks[0-3], 
+mul[0-15], dt1[0-7], detune[], ams[0-3]) x 1~4};</pre>
+                    </div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#MA@<i> [音色番号] </i>{<i> 音源設定 </i>}<i> (音色MML) </i>;</h4><p class="list-group-item-text">FM音源音色定義(MA3:YMU762相当)。%6@[音色番号]で呼出</p>
+<pre>#MA@0{alg[0-7], fb[0-7], 
+(ws[0-31], ar[0-15], dr[0-15], sr[0-15], rr[0-15], 
+sl[0-15], tl[0-63], ksr[0,1], ksl[0-3], 
+mul[0-15], dt1[0-7], ams[0-3]) x 1~4};</pre>
+                    </div>
+                    <div class="list-group-item"><h4 class="list-group-item-heading">#AL@<i> [音色番号] </i>{<i> 音源設定 </i>}<i> (音色MML) </i>;</h4><p class="list-group-item-text">音色定義(仮想アナログシンセ)。%6@[音色番号]で呼出</p>
+<pre>#AL@0{con[0-2], 
+ws1[0-511], ws2[0-511], balance[-64-+64], vco2pitch[]
+ar[0-63], dr[0-63], sl[0-15], rr[0-63]};</pre>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="menu3" class="tab-pane fade">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">エフェクタ記述用MML <small><a href="http://keim.github.io/sion/mmlref/sion_mml_reference.html#define-effector" target="_reference">[詳細]</a></small></h3>
+                  </div>
+                  <div class="panel-body"><code>#EFFECT{...};</code>コマンド内で使用するエフェクタ接続専用のMML。<code>{...}</code>の後に<code>p</code>, <code>@p</code>, <code>@v</code>を指定可能。</div>
+                  <div class="list-group">
+<div class="list-group-item"><h4 class="list-group-item-heading">eq <i>[lg] , [mg] , [hg] , [lf] , [hf]</i></h4>
+<p class="list-group-item-text">(3Band <u>EQ</u>ualizer)3バンドイコライザ</p>
+<pre>lg;Low gain[%](100)<br/>mg;Middle gain[%](100)<br/>hg;High gain[%](100)<br/>lf;Low freq.[Hz](800)<br/>hf;High freq.[Hz](5000)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">ws <i>[dist] , [level]</i></h4>
+<p class="list-group-item-text">(<u>W</u>ave <u>S</u>haper)ウェーブシェイバー</p>
+<pre>dist;Distortion[](50)<br/>level;Output level[%](100)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">delay <i>[time] , [fb] , [cross] , [wet]</i></h4>
+<p class="list-group-item-text">(<u>DELAY</u>)ディレイ</p>
+<pre>time;Delay time[ms](200)<br/>fb;Feedback[%](25)<br/>cross;Stereo channel crossing(0)<br/>wet;wet level[%](100)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">reverb <i>[dly1] , [dly2] , [fb] , [wet]</i></h4>
+<p class="list-group-item-text">(<u>REVERB</u>)リバーブ</p>
+<pre>dly1;Long delay time[%](70)<br/>dly1;Short delay time[%](40)<br/>fb;Feedback[%](80)<br/>wet;wet level[%](100)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">chorus <i>[time] , [fb] , [depth] , [wet]</i></h4>
+<p class="list-group-item-text">(<u>CHORUS</u>)コーラス</p>
+<pre>time;Delay time[ms](20)<br/>fb;Feedback[%](50)<br/>depth;Depth[](200)<br/>wet;wet level[%](100)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">dist <i>[pre] , [post] , [lpf] , [slope]</i></h4>
+<p class="list-group-item-text">(<u>DIST</u>ortion)ディストーション</p>
+<pre>pre;PreGain[dB](-60)<br/>post;PostGain[dB](-12)<br/>lpf;LPF Freq[Hz](2400)<br/>slope;LPF Slope[oct](1)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">comp <i>[thres] , [wnd] , [ar] , [rr] , [gain] , [level]</i></h4>
+<p class="list-group-item-text">(<u>COMP</u>ressor)コンプレッサ</p>
+<pre>thres;Threshold[%](70)<br/>wnd;Window Width[ms](50)<br/>ar;Attack[ms](20)<br/>rr;Release[ms](20)<br/>gain;Max gain[db](6)<br/>level;output level[%](50)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">autopan <i>[freq] , [depth]</i></h4>
+<p class="list-group-item-text">(<u>AUTOPAN</u>)オートパン</p>
+<pre>freq;Frequency[Hz](1)<br/>depth;Panning width[%](100)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">stereo <i>[wide] , [pan] , [phase]</i></h4>
+<p class="list-group-item-text">(<u>STEREO</u> enhancer)ステレオエンハンサ</p>
+<pre>wide;enhancement[%](140)<br/>pan;Panning(0)<br/>phase;Phase invert(0)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">ds <i>[freq] , [bits] , [ch]</i></h4>
+<p class="list-group-item-text">(<u>D</u>own <u>S</u>ampler)ダウンサンプラー</p>
+<pre>freq;Freq.Shift(0=44.1kHz/1=22.05kHz/2=11.02kHz...)<br/>bits ; bit ratio(16)<br/>ch ; channel count(2)
+</p></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">speaker <i>[hardness]</i></h4>
+<p class="list-group-item-text">(<u>SPEAKER</u> simulator)圧電スピーカーシミュレータ</p>
+<pre>hardness ; diaphragm hardness[%](10)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">lf <i>[freq] , [band]</i></h4>
+<p class="list-group-item-text">(<u>L</u>ow pass <u>F</u>ilter)ローパスフィルタ</p>
+<pre>freq;Frequency[Hz](800)<br/>band;band width[oct](1)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">hf <i>[freq] , [band]</i></h4>
+<p class="list-group-item-text">(<u>H</u>igh pass <u>F</u>ilter)ハイパスフィルタ</p>
+<pre>freq;Frequency[Hz](5000)<br/>band;band width[oct](1)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">bf <i>[freq] , [band]</i></h4>
+<p class="list-group-item-text">(<u>B</u>and pass <u>F</u>ilter)バンドパスフィルタ</p>
+<pre>freq;Frequency[Hz](3000)<br/>band;band width[oct](1)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">nf <i>[freq] , [band]</i></h4>
+<p class="list-group-item-text">(<u>N</u>otch (band stop) <u>F</u>ilter)ノッチフィルタ</p>
+<pre>freq;Frequency[Hz](3000)<br/>band;band width[oct](1)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">pf <i>[freq] , [band]</i></h4>
+<p class="list-group-item-text">(<u>P</u>eaking <u>F</u>ilter)ピーキングフィルタ</p>
+<pre>freq;Frequency[Hz](3000)<br/>band;band width[oct](1)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">af <i>[freq] , [band]</i></h4>
+<p class="list-group-item-text">(<u>A</u>ll pass <u>F</u>ilter)オールパスフィルタ</p>
+<pre>freq;Frequency[Hz](3000)<br/>band;band width[oct](1)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">lb <i>[freq] , [slope] , [gain]</i></h4>
+<p class="list-group-item-text">(<u>L</u>ow <u>B</u>ooster)ローブースター</p>
+<pre>freq;Frequency[Hz](3000)<br/>slope;slope[oct](1)<br/>gain;gain[dB](6)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">hb <i>[freq] , [slope] , [gain]</i></h4>
+<p class="list-group-item-text">(<u>H</u>igh <u>B</u>ooster)ハイブースター</p>
+<pre>freq;Frequency[Hz](5500)<br/>slope;slope[oct](1)<br/>gain;gain[dB](6)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">nlf <i>[cut] , [res]</i></h4>
+<p class="list-group-item-text">(<u>EN</u>velope controlable <u>L</u>ow pass <u>F</u>ilter)ローパスフィルタ(テーブルエンベロープ)</p>
+<pre>cut;cutoff table index(255)<br/>res;resonance table index(255)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">nhf <i>[cut] , [res]</i></h4>
+<p class="list-group-item-text">(<u>EN</u>velope controlable <u>H</u>igh pass <u>F</u>ilter)ハイパスフィルタ(テーブルエンベロープ)</p>
+<pre>cut;cutoff table index(255)<br/>res;resonance table index(255)</pre></div>
+<div class="list-group-item"><h4 class="list-group-item-heading">vowel <i>[out] , [f1] , [g1] , [f2] , [g2]</i></h4>
+<p class="list-group-item-text">(<u>Vowel</u> filter)バウエルフィルタ</p>
+<pre>out;output[%](100)<br/>f1;1st freq.(800)<br/>g1;1st gain[dB](36)<br/>f2;2nd freq.(1300)<br/>g2;2nd gain[dB](24)</pre></div>
+                    </tbody></table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
