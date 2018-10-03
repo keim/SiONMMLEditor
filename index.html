@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
-  　 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.0/js.cookie.min.js"></script>
@@ -29,10 +29,21 @@
 span.mml {
   display:none;
 }
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: -30px;
+  list-style: none;
+}
+.nav-link {
+  display: block;
+  padding: .5rem 1rem;
+}
     </style>
     <script>
 (function(){
-  var jsion, isSolo, editor, presetVoices, muteTable = new Array(100);
+  var jsion, editor, presetVoices, muteTable = new Array(100);
 
   function _onReady() {
     $("#play").attr("disabled", false);
@@ -95,64 +106,6 @@ span.mml {
     $("#stop").hide();
     $("#play").show();
     position.stop();
-  }
-
-  function _onChangeTrackMode() {
-    if ($("#mute").val()=='mute') {
-      $("#mute-track").show();
-      $("#solo-track").hide();
-      isSolo = false;
-    } else {
-      $("#mute-track").hide();
-      $("#solo-track").show();
-      isSolo = true;
-    }
-    $("#mute-track>label,#solo-track>label").removeClass('active');
-    _updateMuteTable();
-  }
-
-  function _updateMuteTable() {
-    if (isSolo) __checkSoloTrack();
-    else        __checkMuteTrack();
-    jsion.applyMuteTable(muteTable);
-  }
-
-  function __checkMuteTrack() {
-    var $label, mutetrack17, i;
-
-    $label = $("#mute-track>label");
-    mutetrack17 = $label.eq(16).hasClass('active');
-
-    for (i=0; i<16; i++) {
-      muteTable[i] = $label.eq(i).hasClass('active');
-    }
-    for (i=16; i<100; i++) {
-      muteTable[i] = mutetrack17;
-    }
-  }
-
-  function __checkSoloTrack() {
-    var $label, solotrack, i;
-
-    $label = $("#solo-track>label");
-
-    solotrack = -1;
-    for (i=0; i<16; i++) {
-      if ($label.eq(i).hasClass('active')) {
-        solotrack = i;
-        break;
-      }
-    }
-
-    if (solotrack == -1) {
-      for (i=0; i<100; i++) {
-        muteTable[i] = false;
-      }
-    } else {
-      for (i=0; i<100; i++) {
-        muteTable[i] = (solotrack != i);
-      }
-    }
   }
 
 
@@ -250,8 +203,6 @@ span.mml {
     $("#help-preset-voice").click(_showPresetVoiceList);
     $("#help-cheat-sheets").click(_showCheatSheets);
     $(".nav>li").tooltip();
-    isSolo = false;
-    $("#mute").on("change", _onChangeTrackMode);
     $("#editor").height($(window).height() - 336);
     $("#mml-list-dialog .modal-body").height($(window).height() - 240);
 
@@ -295,9 +246,10 @@ span.mml {
 
   <body>
     <div class="container-fluid">
-      <ol class="breadcrumb">
-        <li><a href="https://github.com/keim"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Github</a></li>
-      </ol>
+      <nav class="nav">
+        <a class="nav-link" href="https://github.com/keim"><i class="fab fa-github"></i></a></li>
+        <a class="nav-link" href="http://keim.github.io"><i class="fas fa-home"></i></a></li>
+      </nav>
 
       <div class='page-header'>
         <h2>SiON MML Editor</h2>
@@ -344,49 +296,6 @@ span.mml {
       <div id="editor">//write mml here</div>
       <br/>
 
-      <form class="form-inline">
-        <select class="form-control" id="mute">
-          <option value="mute">Mute</option>
-          <option value="solo">Solo</option>
-        </select>
-        <div class="btn-group" id="mute-track" data-toggle="buttons">
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">1</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">2</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">3</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">4</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">5</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">6</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">7</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">8</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">9</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">10</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">11</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">12</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">13</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">14</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">15</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">16</label>
-          <label class="btn btn-default"><input type="checkbox" autocomplete="off">17~</label>
-        </div>
-        <div class="btn-group" id="solo-track" data-toggle="buttons" style="display:none;">
-          <label class="btn btn-default"><input type="radio" autocomplete="off">1</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">2</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">3</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">4</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">5</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">6</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">7</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">8</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">9</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">10</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">11</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">12</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">13</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">14</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">15</label>
-          <label class="btn btn-default"><input type="radio" autocomplete="off">16</label>
-        </div>
-      </form>
 
       <!-- KEYBOARD SHORTCUTS -->
       <div class="row">
